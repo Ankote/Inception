@@ -1,0 +1,36 @@
+version: '3.8' #copose file version
+services: #containers
+
+#database layer for eordpress >> mariadb
+  mariaDB :
+    image : mariadb
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+      container_name: mariadb
+    env_file:
+      - ./.env
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    restart: always
+    networks:
+      inception:
+    port:
+      "3306:3306"
+
+
+  wordpress : #container name
+    depends_on: 
+      -mariaDB # this means wordpress not work just if mariadb container works
+    image: wordpress
+    restart: always # if there if any probleme the container will restatr
+    build: ./requirements/wordpress
+    container_name: wordpress
+    env_file:
+      - ./.env
+    volumes:
+      - wordpress-data:/var/www/html/wordpress
+    networks:
+      inception:
+    port:
+      "9000:9000"

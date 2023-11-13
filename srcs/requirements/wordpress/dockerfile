@@ -1,0 +1,13 @@
+FROM debian:latest
+
+RUN apt -y update & apt -y upgrade 
+
+WORKDIR /var/www/http
+
+RUN  apt -y install wget
+
+RUN wget https://wordpress.org/latest.tar.gz
+
+RUN tar -xzvf latest.tar.gz
+
+RUN rm -fr  /var/www/http/latest.tar.gz 
