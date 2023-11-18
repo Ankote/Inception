@@ -16,7 +16,7 @@ services:
   nginx:
     image: nginx
     volumes:
-    - wordpress:/var/wordpress
+    - wordpress:/var/www/wordpress
     networks:
     - inception
     depends_on:
@@ -39,7 +39,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - wordpress:/var/wordpress
+      - wordpress:/var/www/wordpress
     networks:
       - inception
   
@@ -61,5 +61,5 @@ volumes:
 
 networks:
   inception:
-    name: mariadb
+    name: inception
     driver: bridge

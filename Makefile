@@ -8,6 +8,8 @@ clean:
 
 re : clean all
 
+fclean :
+	docker images -q | xargs docker rmi -f
 start :
 	docker start mariadb
 	docker start wordpress
@@ -17,6 +19,7 @@ stop :
 	docker stop  wordpress
 	docker stop  nginx
 	docker stop mariadb
-	
 
-restart : stop up
+restart : stop start
+
+.PHONY : all clean re fclean start stop restart

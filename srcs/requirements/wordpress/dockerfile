@@ -3,7 +3,8 @@ FROM debian:11
 RUN apt -y update && apt -y upgrade 
 
 EXPOSE 9000
-# WORKDIR /var/www/
+
+WORKDIR /var/www/
 
 RUN  apt -y install wget
 
@@ -12,21 +13,19 @@ RUN apt-get install -y php\
                     php-mysql\
                     mariadb-client
 
-COPY ./setup.sh ./
+COPY ./setup.sh /var/www/
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
 
-RUN  chmod 777  /setup.sh
+RUN  chmod 777  /var/www/setup.sh
 
 RUN wget https://wordpress.org/latest.tar.gz
 
 RUN tar -xzvf latest.tar.gz
 
-RUN mv wordpress /var/
-
-COPY ./conf /var/wordpress
+COPY ./conf /var/www/wordpress
 
 RUN rm -fr latest.tar.gz
 
-CMD ["/setup.sh"]
+CMD ["/var/www/setup.sh"]
