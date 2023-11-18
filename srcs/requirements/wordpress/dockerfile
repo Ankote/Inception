@@ -1,13 +1,32 @@
-FROM debian:latest
+FROM debian:11
 
-RUN apt -y update & apt -y upgrade 
+RUN apt -y update && apt -y upgrade 
 
-WORKDIR /var/www/http
+EXPOSE 9000
+# WORKDIR /var/www/
 
 RUN  apt -y install wget
+
+RUN apt-get install -y php\
+                    php-fpm\
+                    php-mysql\
+                    mariadb-client
+
+COPY ./setup.sh ./
+
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+
+RUN  chmod 777  /setup.sh
 
 RUN wget https://wordpress.org/latest.tar.gz
 
 RUN tar -xzvf latest.tar.gz
 
-RUN rm -fr  /var/www/http/latest.tar.gz 
+RUN mv wordpress /var/
+
+COPY ./conf /var/wordpress
+
+RUN rm -fr latest.tar.gz
+
+CMD ["/setup.sh"]

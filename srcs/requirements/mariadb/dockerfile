@@ -1,10 +1,8 @@
-FROM debian:12
-
-ENV SQL_DATABASE=dataB
-ENV SQL_USER=ankote
-ENV SQL_PASSWORD=1234
+FROM debian:11
 
 EXPOSE 3306
+
+WORKDIR /var/mariadb
 
 RUN apt -y update && apt -y upgrade
 
@@ -12,8 +10,8 @@ RUN apt -y install mariadb-server
 
 COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
 
-COPY ./tools/setup.sh /
-RUN chmod 777 /setup.sh
+COPY ./tools/setup.sh /var/mariadb/
+RUN chmod 777 /var/mariadb/setup.sh
 
 # Start MariaDB on container launch
-# CMD ["/setup.sh"]
+CMD ["/var/mariadb/setup.sh"]

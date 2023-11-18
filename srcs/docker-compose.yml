@@ -1,36 +1,65 @@
-version: '3.8' #copose file version
-services: #containers
+version: '3.8'
 
-#database layer for eordpress >> mariadb
+services:
   mariaDB :
     image : mariadb
-    build:
-      context: ./requirements/mariadb
-      dockerfile: Dockerfile
-      container_name: mariadb
+    container_name: mariadb
     env_file:
       - ./.env
     volumes:
-      - mariadb-data:/var/lib/mysql
+      - mariadb:/var/lib/mysql
+    build: ./requirements/mariadb
     restart: always
     networks:
-      inception:
-    port:
-      "3306:3306"
+      - inception
 
-
-  wordpress : #container name
+  nginx:
+    image: nginx
+    volumes:
+    - wordpress:/var/wordpress
+    networks:
+    - inception
+    depends_on:
+    - mariaDB
+    build: requirements/nginx
+    container_name: nginx
+    env_file: .env
+    ports:
+    - "443:443"
+    restart: always
+  
+  
+  wordpress :
     depends_on: 
-      -mariaDB # this means wordpress not work just if mariadb container works
+      - mariaDB
     image: wordpress
-    restart: always # if there if any probleme the container will restatr
+    restart: always
     build: ./requirements/wordpress
     container_name: wordpress
     env_file:
       - ./.env
     volumes:
-      - wordpress-data:/var/www/html/wordpress
+      - wordpress:/var/wordpress
     networks:
-      inception:
-    port:
-      "9000:9000"
+      - inception
+  
+volumes:
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/aankote/data/wordpress'
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: 'none' 
+      o: 'bind'
+      device: '/home/aankote/data/mariadb'
+
+networks:
+  inception:
+    name: mariadb
+    driver: bridge

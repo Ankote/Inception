@@ -1,26 +1,18 @@
-FROM  debian:12
+FROM  debian:11
 
 EXPOSE 443
 
-RUN apt -y update & apt -y upgrade
+RUN apt -y update && apt -y upgrade
 
-RUN apt install -y openssl 
-
-RUN apt install curl -y   
-
-RUN apt install -y nginx
-# create default SSL directory
+RUN apt install -y openssl \
+                   curl -y \ 
+                   nginx
 
 RUN mkdir -p /etc/nginx/ssl 
 
-RUN chmod 755 /var/www/html
-
-RUN chown -R www-data:www-data /var/www/html 
-
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -nodes -keyout \
-    /etc/nginx/ssl/private-key.key -out /etc/nginx/ssl/aankote.42.fr.crt subj '/'
+    /etc/nginx/ssl/private-key.key -out /etc/nginx/ssl/aankote.42.fr.crt -subj "/"
 
-#Copy custom nginx configuration to replace the default one
-COPY ./conf/default.conf /etc/nginx/http.d/default.conf 
+COPY ./conf/default.conf /etc/nginx/sites-enabled/default.conf 
 
 CMD [ "nginx", "-g", "daemon off;" ]
