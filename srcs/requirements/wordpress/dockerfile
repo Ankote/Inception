@@ -25,7 +25,7 @@ RUN wget https://wordpress.org/latest.tar.gz
 RUN tar -xzvf latest.tar.gz
 
 COPY ./conf /var/www/wordpress
-
+RUN chown -R www-data:www-data /var/www/wordpress
 RUN rm -fr latest.tar.gz
 
 CMD ["/var/www/setup.sh"]

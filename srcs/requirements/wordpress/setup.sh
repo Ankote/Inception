@@ -8,7 +8,7 @@ mv wp-cli.phar /usr/local/bin/wp
 
 echo -n "Installing WP-CLI..................................."
 
-until mariadb -h "mariadb" -u"ankote" -p1234 -e ";"; do 
+until mariadb -h "mariadb" -u"$SQL_USER" -p$SQL_PASSWORD -e ";"; do 
     echo "Wait Wait Wait one minute ..."
     sleep 5
 done
@@ -27,5 +27,9 @@ wp user create --allow-root  "$WP_USER"\
                 --role=editor\
                 --user_pass="$WP_USER_PW"\
                 --path="/var/www/wordpress"
+wp plugin install --allow-root\
+                    redis-cache \
+                    --activate\
+                    --path="/var/www/wordpress"
 
 php-fpm7.4 -F

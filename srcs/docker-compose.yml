@@ -28,7 +28,6 @@ services:
     - "443:443"
     restart: always
   
-  
   wordpress :
     depends_on: 
       - mariaDB
@@ -42,7 +41,16 @@ services:
       - wordpress:/var/www/wordpress
     networks:
       - inception
-  
+
+  redis:
+    image: redis
+    build: ./requirements/bonus/redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - inception
+
 volumes:
   wordpress:
     name: wordpress
@@ -58,6 +66,13 @@ volumes:
       type: 'none' 
       o: 'bind'
       device: '/home/aankote/data/mariadb'
+  redis :
+    name: redis
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/aankote/data/redis'
 
 networks:
   inception:
