@@ -1,0 +1,20 @@
+FROM debian:11
+
+# Install vsftpd
+RUN apt update -y
+
+RUN   apt install -y vsftpd
+
+RUN apt install -y ftp
+
+# RUN mkdir -p /var/run/vsftpd/empty
+
+# COPY ./conf/vsftpd.conf /etc/vsftpd.conf
+
+COPY ./setup.sh ./
+
+RUN chmod 777 ./setup.sh
+
+EXPOSE 20 21
+
+CMD ["./setup.sh"]

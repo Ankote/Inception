@@ -48,6 +48,21 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+  ftp:
+    image: ftp
+    build: ./requirements/bonus/FTP
+    container_name: ftp
+    ports:
+      - "20:20"
+      - 21:21
+    env_file:
+      - ./.env
+    volumes:
+      - wordpress:/home/vsftpd/myuser
     networks:
       - inception
 
