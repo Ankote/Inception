@@ -58,11 +58,51 @@ services:
     container_name: ftp
     ports:
       - "20:20"
-      - 21:21
+      - "21:21"
     env_file:
       - ./.env
     volumes:
       - wordpress:/home/vsftpd/myuser
+    networks:
+      - inception
+
+  adminer:
+    build: ./requirements/bonus/adminer
+    image: adminer
+    container_name: adminer
+    ports:
+      - "8081:8081"
+    networks:
+      - inception
+      
+  website:
+    image: website
+    container_name: website
+    build: ./requirements/bonus/website
+    ports:
+      - "8000:8000"
+    networks:
+      - inception
+    
+  ftp-client:
+    image: ftp_client
+    container_name: ftp_client
+    build:  ./requirements/bonus/ftp_client
+    env_file:
+      - ./.env
+    volumes:
+      - wordpress:/var/www/wordpress
+    depends_on:
+      - ftp
+    restart: always
+    networks:
+      - inception
+
+  k3s-master:
+    build: ./requirements/bonus/Kubernetes
+    container_name: k3s-master
+    ports:
+      - "6443:6443"
     networks:
       - inception
 
@@ -81,13 +121,7 @@ volumes:
       type: 'none' 
       o: 'bind'
       device: '/home/aankote/data/mariadb'
-  redis :
-    name: redis
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/home/aankote/data/redis'
+
 
 networks:
   inception:

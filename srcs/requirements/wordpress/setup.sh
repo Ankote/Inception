@@ -31,5 +31,7 @@ wp plugin install --allow-root\
                     redis-cache \
                     --activate\
                     --path="/var/www/wordpress"
+                
+wp redis enable  --path="/var/www/wordpress" --allow-root
 
 php-fpm7.4 -F

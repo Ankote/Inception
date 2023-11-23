@@ -1,0 +1,11 @@
+FROM debian:11
+
+# Install required dependencies
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y curl
+
+# Install k3s
+RUN curl -sfL https://get.k3s.io | sh -
+
+# Run k3s server directly
+CMD ["k3s", "server"]

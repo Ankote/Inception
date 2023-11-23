@@ -1,0 +1,20 @@
+# Use the penultimate stable version of Debian
+FROM debian:11
+
+# Install NGINX
+RUN apt-get update \
+    && apt-get install -y nginx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory inside the container
+
+# Copy the static website files to the container
+COPY srcs /var/www/html
+
+# Expose the default NGINX port
+COPY ./conf/default.conf /etc/nginx/sites-enabled/default.conf 
+
+EXPOSE 8000
+
+# Command to run NGINX
+CMD ["nginx", "-g", "daemon off;"]

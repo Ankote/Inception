@@ -1,0 +1,15 @@
+FROM    debian:11
+
+RUN   apt-get update && apt-get upgrade
+
+RUN   apt-get install -y php-cli  php-pdo-mysql
+
+RUN  apt-get install wget -y
+
+RUN   wget https://www.adminer.org/latest.php
+
+RUN   mv latest.php  index.php
+
+EXPOSE 8081
+
+CMD ["php", "-S", "0.0.0.0:8081"] 
