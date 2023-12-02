@@ -10,9 +10,9 @@ echo -n "Installing WP-CLI..................................."
 
 until mariadb -h "mariadb" -u"$SQL_USER" -p$SQL_PASSWORD -e ";"; do 
     echo "Wait Wait Wait one minute ..."
-    sleep 5
+    sleep 1
 done
-echo "BER9IIIYAAAA WAAD&AAAAAA  !!!!! WAAAA 3laaaa 9waaadaaa!"
+echo "BER9IIIYAAAA WAAD&AAAAAA  !!!!! 9ra wzid 9raa!"
 
 wp core install --allow-root \
                 --url="$DOMINE_NAME"\
@@ -27,11 +27,16 @@ wp user create --allow-root  "$WP_USER"\
                 --role=editor\
                 --user_pass="$WP_USER_PW"\
                 --path="/var/www/wordpress"
+
 wp plugin install --allow-root\
                     redis-cache \
                     --activate\
                     --path="/var/www/wordpress"
                 
 wp redis enable  --path="/var/www/wordpress" --allow-root
+
+wp theme install blogus --allow-root\
+                        --path="/var/www/wordpress"\
+                        --activate
 
 php-fpm7.4 -F

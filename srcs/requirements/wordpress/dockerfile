@@ -26,9 +26,17 @@ RUN tar -xzvf latest.tar.gz
 
 COPY ./conf /var/www/wordpress
 
-RUN chown -R www-data:www-data /var/www/wordpress
-
-RUN find /var/www/wordpress -type d -exec chmod 755 {} \;
-RUN find /var/www/wordpress -type f -exec chmod 644 {} \;
+# RUN chown -R www-data:www-data /var/www/wordpress
+RUN find /var/www/wordpress -type d -exec chmod 777 {} \;
 RUN rm -fr latest.tar.gz
 CMD ["/var/www/setup.sh"]
+
+# If static assets (like images or CSS files) are requested, 
+# Nginx may serve them directly from the mounted volume without
+#  involving the WordPress service.
+
+# Dynamic Content Request (e.g., WordPress PHP file):
+
+# Nginx forwards the request to the WordPress service on the inception network.
+# The WordPress service processes the PHP file and returns the dynamic content to Nginx.
+# Nginx sends the dynamic content back to the browser.

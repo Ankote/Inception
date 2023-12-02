@@ -11,7 +11,7 @@ RUN apt-get update \
 # Copy the static website files to the container
 COPY srcs /var/www/html
 
-# Expose the default NGINX port
+# EXPOSE the default NGINX port
 COPY ./conf/default.conf /etc/nginx/sites-enabled/default.conf 
 
 EXPOSE 8000

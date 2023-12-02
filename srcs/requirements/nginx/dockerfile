@@ -5,7 +5,6 @@ EXPOSE 443
 RUN apt -y update && apt -y upgrade
 
 RUN apt install -y openssl \
-                   curl -y \ 
                    nginx
 
 RUN mkdir -p /etc/nginx/ssl 

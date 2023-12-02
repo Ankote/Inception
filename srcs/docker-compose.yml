@@ -52,6 +52,8 @@ services:
       - wordpress:/var/www/wordpress
     networks:
       - inception
+    restart: always
+    
   ftp:
     image: ftp
     build: ./requirements/bonus/FTP
@@ -65,6 +67,7 @@ services:
       - wordpress:/home/vsftpd/myuser
     networks:
       - inception
+    restart: always
 
   adminer:
     build: ./requirements/bonus/adminer
@@ -74,6 +77,7 @@ services:
       - "8081:8081"
     networks:
       - inception
+    restart: always
       
   website:
     image: website
@@ -83,6 +87,7 @@ services:
       - "8000:8000"
     networks:
       - inception
+    restart: always
     
   ftp-client:
     image: ftp_client
@@ -98,13 +103,14 @@ services:
     networks:
       - inception
 
-  k3s-master:
-    build: ./requirements/bonus/Kubernetes
-    container_name: k3s-master
-    ports:
-      - "6443:6443"
-    networks:
-      - inception
+  # k3s-master:
+  #   build: ./requirements/bonus/Kubernetes
+  #   container_name: k3s-master
+  #   ports:
+  #     - "6443:6443"
+  #   networks:
+  #     - inception
+  #   restart: always
 
 volumes:
   wordpress:

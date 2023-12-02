@@ -7,7 +7,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends redis-server \
     && rm -rf /var/lib/apt/lists/*
 
-# Expose Redis port
+# EXPOSE Redis port
 RUN echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
 
 RUN echo "echo madvise > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local

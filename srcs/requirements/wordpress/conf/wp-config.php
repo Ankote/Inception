@@ -2,18 +2,12 @@
 define( 'DB_NAME', getenv('SQL_DATABASE'));
 define( 'DB_USER', getenv('SQL_USER'));
 define( 'DB_PASSWORD', getenv('SQL_PASSWORD'));
-
-/** MySQL hostname */
 define( 'DB_HOST', 'mariadb' );
 define( 'DB_CHARSET', 'utf8mb4' );
 
 //Filesystem:	 Writeable (in redis pungin)
 define('WP_REDIS_HOST', 'redis');
 define('WP_REDIS_PORT', '6379');
-
-// define('FTP_USER', getenv('FTP_USER'));
-// define('FTP_PASS', getenv('FTP_PASS'));
-// define('FTP_HOST', getenv('DOMINE_NAME'));
 
 define( 'AUTH_KEY',         'w<6 ZgXX&Mia8_OFdDJwi-!?=dwbf+]KzgK6SXbt2?2R5Mfw,.sYHZqW1gSOR+)T' );
 define( 'SECURE_AUTH_KEY',  'CQ1[IXN$V-D:Xf/~xGK<d1S[XVH*Urc90,Utnc@mm5FWDc^z@ XFAfT(N]3^,k>}' );

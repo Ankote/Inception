@@ -7,15 +7,10 @@ RUN apt -y update && apt -y upgrade
 RUN apt -y install mariadb-server
 
 COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
-# RUN echo "[mysqld]" > /etc/mysql/mariadb.conf.d/50-server.cnf
-# RUN echo "datadir = /var/lib/mysql" >> /etc/mysql/mariadb.conf.d/50-server.cnf
-# RUN echo "socket  = /run/mysqld/mysqld.sock" >> /etc/mysql/mariadb.conf.d/50-server.cnf
-# RUN echo "bind_address=*" >> /etc/mysql/mariadb.conf.d/50-server.cnf
-# RUN echo "port = 3306" >> /etc/mysql/mariadb.conf.d/50-server.cnf
-# RUN echo "user = mysql" >> /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY ./tools /var/tools 
-# folder tools will be created and tools content will be copy intom it
-RUN chmod 777 /var/tools/setup.sh
 
+COPY ./tools /var/tools 
+
+RUN chmod 777 /var/tools/setup.sh
+ 
 # Start MariaDB on container launch
 CMD ["/var/tools/setup.sh"]
