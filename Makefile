@@ -1,23 +1,21 @@
-all:
+all: up
+
+up: build
+	docker compose -f srcs/docker-compose.yml up
+
+build:
 	mkdir  -p ~/data/mariadb
 	mkdir  -p ~/data/wordpress
-	mkdir  -p ~/data/mariadb
-	mkdir  -p ~/data/redis
-	mkdir  -p ~/data/FTP
-	docker compose -f ./srcs/docker-compose.yml up  --build
-clean:
-	docker compose -f ./srcs/docker-compose.yml down -v
-	sudo rm -rf /home/aankote/data
+	mkdir  -p ~/data/ftp
+	docker compose -f srcs/docker-compose.yml build
 
-re : clean all
+down:
+	docker compose -f srcs/docker-compose.yml down -v
 
-fclean :
-	docker images -q | xargs docker rmi -f
-start :
-	docker start $(docker container ls -a)
-stop :
-	docker stop $(docker compose ps -qa)
+clean: down
+	docker compose -f srcs/docker-compose.yml down --rmi all
 
-restart : stop start
+fclean: clean
+	sudo rm -rf ~/data/*
 
-.PHONY : all clean re fclean start stop restart
+re : fclean all

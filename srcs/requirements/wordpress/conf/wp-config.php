@@ -3,7 +3,6 @@ define( 'DB_NAME', getenv('SQL_DATABASE'));
 define( 'DB_USER', getenv('SQL_USER'));
 define( 'DB_PASSWORD', getenv('SQL_PASSWORD'));
 define( 'DB_HOST', 'mariadb' );
-define( 'DB_CHARSET', 'utf8mb4' );
 
 //Filesystem:	 Writeable (in redis pungin)
 define('WP_REDIS_HOST', 'redis');

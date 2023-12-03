@@ -2,16 +2,7 @@ FROM debian:11
 
 EXPOSE 6379
 
-# Install Redis
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends redis-server \
-    && rm -rf /var/lib/apt/lists/*
+    && apt install -y redis-server php-pear php-dev
 
-# EXPOSE Redis port
-RUN echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
-
-RUN echo "echo madvise > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local
-RUN apt-get install -y redis-tools 
-
-# Start Redis server
 CMD ["redis-server", "--protected-mode no"]

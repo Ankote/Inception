@@ -1,9 +1,7 @@
 FROM debian:11
 
-# Install lftp
 RUN apt-get update && \
     apt install -y lftp && \
     rm -rf /var/lib/apt/lists/*
 
-# Set the default command to run lftp
 CMD ["lftp","f"]

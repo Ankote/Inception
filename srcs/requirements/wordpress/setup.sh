@@ -12,7 +12,7 @@ until mariadb -h "mariadb" -u"$SQL_USER" -p$SQL_PASSWORD -e ";"; do
     echo "Wait Wait Wait one minute ..."
     sleep 1
 done
-echo "BER9IIIYAAAA WAAD&AAAAAA  !!!!! 9ra wzid 9raa!"
+echo "Wordpress Connected to MariaDb"
 
 wp core install --allow-root \
                 --url="$DOMINE_NAME"\

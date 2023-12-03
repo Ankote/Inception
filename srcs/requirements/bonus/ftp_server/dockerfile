@@ -1,6 +1,5 @@
 FROM debian:11
 
-# Install vsftpd
 RUN apt update -y
 
 RUN apt install -y vsftpd

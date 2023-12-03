@@ -19,6 +19,6 @@ chmod 777 /home/vsftpd/myuser
 vsftpd
 # When you run the vsftpd command, the vsftpd daemon will 
 # start up and listen for incoming connections on port 21.
-#  When a client connects tothe FTP server, vsftpd will 
+#  When a client connects to the FTP server, vsftpd will 
 # authenticate the client and then allow the client to
 # upload and download files.

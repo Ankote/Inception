@@ -6,11 +6,10 @@ RUN apt -y update && apt -y upgrade
 
 RUN apt -y install mariadb-server
 
-COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
+RUN echo "" > /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY ./tools /var/tools 
 
 RUN chmod 777 /var/tools/setup.sh
  
-# Start MariaDB on container launch
 CMD ["/var/tools/setup.sh"]

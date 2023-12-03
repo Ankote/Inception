@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  mariaDB :
+  mariadb :
     image : mariadb
     container_name: mariadb
     env_file:
@@ -54,17 +54,16 @@ services:
       - inception
     restart: always
     
-  ftp:
-    image: ftp
-    build: ./requirements/bonus/FTP
-    container_name: ftp
+  ftp_server:
+    image: ftp_server
+    build: ./requirements/bonus/ftp_server
+    container_name: ftp_server
     ports:
-      - "20:20"
       - "21:21"
     env_file:
       - ./.env
     volumes:
-      - wordpress:/home/vsftpd/myuser
+      - ftp:/home/vsftpd/myuser
     networks:
       - inception
     restart: always
@@ -90,27 +89,18 @@ services:
     restart: always
     
   ftp-client:
-    image: ftp_client
-    container_name: ftp_client
+    image: ftp-client
+    container_name: ftp-client
     build:  ./requirements/bonus/ftp_client
     env_file:
       - ./.env
     volumes:
       - wordpress:/var/www/wordpress
     depends_on:
-      - ftp
+      - ftp_server
     restart: always
     networks:
       - inception
-
-  # k3s-master:
-  #   build: ./requirements/bonus/Kubernetes
-  #   container_name: k3s-master
-  #   ports:
-  #     - "6443:6443"
-  #   networks:
-  #     - inception
-  #   restart: always
 
 volumes:
   wordpress:
@@ -127,7 +117,13 @@ volumes:
       type: 'none' 
       o: 'bind'
       device: '/home/aankote/data/mariadb'
-
+  ftp:
+    name: ftp
+    driver: local
+    driver_opts:
+      type: 'none' 
+      o: 'bind'
+      device: '/home/aankote/data/ftp'
 
 networks:
   inception:
