@@ -20,7 +20,7 @@ services:
     networks:
     - inception
     depends_on:
-    - mariaDB
+    - mariadb
     build: requirements/nginx
     container_name: nginx
     env_file: .env
@@ -30,7 +30,7 @@ services:
   
   wordpress :
     depends_on: 
-      - mariaDB
+      - mariadb
     image: wordpress
     restart: always
     build: ./requirements/wordpress
